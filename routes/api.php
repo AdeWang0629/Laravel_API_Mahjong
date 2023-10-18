@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\PlayerController;
+use App\Http\Controllers\Api\GameController;
+use App\Http\Controllers\Api\ScoreController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,3 +26,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('hello', function(){
     return response()->json("1234567890");
 });
+
+Route::apiResource('player', PlayerController::class);
+Route::apiResource('game', GameController::class);
+Route::apiResource('score', ScoreController::class);
