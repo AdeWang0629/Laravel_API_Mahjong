@@ -28,6 +28,9 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info("123456789123456789");
+        \Log::info($request);
+
         $player = new Player;
 
         $player->name = $request->p_name;
@@ -75,6 +78,9 @@ class PlayerController extends Controller
     public function destroy($id)
     {
         //
+        \Log::info("123456789123456789");
+        \Log::info($id);
+
         $player = Player::find($id);
 
         $player->delete();

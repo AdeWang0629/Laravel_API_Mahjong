@@ -16,4 +16,8 @@ class GamePlayer extends Model
     public function total_scores(){
         return $this->hasOne(TotalScore::class);
     }
+
+    public function normal_scores(){
+        return $this->hasMany(NormalScore::class);
+    }
 }

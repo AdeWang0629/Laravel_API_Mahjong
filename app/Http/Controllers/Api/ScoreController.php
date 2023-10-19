@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\GamePlayer;
 use App\Models\TotalScore;
 use App\Models\Game;
+use App\Models\NormalScore;
 
 class ScoreController extends Controller
 {
@@ -43,6 +44,16 @@ class ScoreController extends Controller
             $total_score->chip_number = $data['chipNumber'][$i];
             $total_score->chip_money = $data['chipMoney'][$i];
             $total_score->save();
+
+            foreach ($data['rows'] as $key => $value) {
+                # code...
+                if (isset($value[$i])) {
+                    $normal_score = new NormalScore();
+                    $normal_score->game_player_id = $game_player[$i]->id;
+                    $normal_score->score = $value[$i];
+                    $normal_score->save();
+                }
+            }
         }
 
         $game = Game::find($data['game_id']);
@@ -61,8 +72,8 @@ class ScoreController extends Controller
     public function show($id)
     {
 
-        $game_player = GamePlayer::with('total_scores')->where("game_id", $id)->get();
-
+        $game_player = GamePlayer::with('normal_scores')->with('total_scores')->where("game_id", $id)->get();
+        \Log::info($game_player);
         return response()->json($game_player);
     }
 

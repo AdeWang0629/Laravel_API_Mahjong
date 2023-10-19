@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TotalScore extends Model
+class NormalScore extends Model
 {
     use HasFactory;
     
-    protected $table = 'total_score';
+    protected $table = 'normal_score';
 
-    protected $fillable = [ 'score', 'score_money', 'chip_number', 'chip_number', 'game_player_id', 'id' ];
+    protected $fillable = [ 'score', 'game_player_id', 'id' ];
 
     public function game_players(){
         return $this->belongsTo(GamePlayer::class);
