@@ -11,7 +11,7 @@ class TotalScore extends Model
     
     protected $table = 'total_score';
 
-    protected $fillable = [ 'score', 'score_money', 'chip_number', 'chip_number', 'game_player_id', 'id' ];
+    protected $fillable = [ 'score', 'score_money', 'chip_number', 'chip_money', 'game_player_id', 'id' ];
 
     public function game_players(){
         return $this->belongsTo(GamePlayer::class);

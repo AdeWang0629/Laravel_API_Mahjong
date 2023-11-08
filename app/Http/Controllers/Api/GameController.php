@@ -16,7 +16,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        $game = Game::with('players')->get();
+        $game = Game::with('players')->orderBy('created_at', 'desc')->get();
         return response()->json($game);
     }
 
@@ -87,5 +87,27 @@ class GameController extends Controller
         $game->players()->detach();
 
         $game->delete();
+    }
+
+    public function game_score_update(Request $request)
+    {
+        $game = Game::find($request->body['game_id']);
+        
+        $game->score = $request->body['game_score'];
+
+        $game->save();
+
+        return response()->json(['game_score' => $game->score], 200);
+    }
+
+    public function game_chip_update(Request $request)
+    {
+        $game = Game::find($request->body['game_id']);
+        
+        $game->chip = $request->body['game_chip'];
+
+        $game->save();
+
+        return response()->json(['game_chip' => $game->chip], 200);
     }
 }

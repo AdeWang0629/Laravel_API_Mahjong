@@ -28,9 +28,6 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::info("123456789123456789");
-        \Log::info($request);
-
         $player = new Player;
 
         $player->name = $request->p_name;
@@ -58,15 +55,16 @@ class PlayerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $player = Player::find($id);
+        \Log::info($request);
+        // $player = Player::find($id);
 
-        $player->checked = !$player->checked;
+        // $player->checked = !$player->checked;
 
-        $player->save();
+        // $player->save();
 
-        return response()->json('success');
+        // return response()->json('success');
     }
 
     /**

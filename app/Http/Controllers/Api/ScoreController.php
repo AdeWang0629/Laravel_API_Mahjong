@@ -37,13 +37,23 @@ class ScoreController extends Controller
      
         for ($i=0; $i < count($game_player); $i++) { 
             # code...
-            $total_score = new TotalScore();
-            $total_score->game_player_id = $game_player[$i]->id;
-            $total_score->score = $data['score'][$i];
-            $total_score->score_money = $data['scoreMoney'][$i];
-            $total_score->chip_number = $data['chipNumber'][$i];
-            $total_score->chip_money = $data['chipMoney'][$i];
-            $total_score->save();
+            // $total_score = new TotalScore();
+            // $total_score->game_player_id = $game_player[$i]->id;
+            // $total_score->score = $data['score'][$i];
+            // $total_score->score_money = $data['scoreMoney'][$i];
+            // $total_score->chip_number = $data['chipNumber'][$i];
+            // $total_score->chip_money = $data['chipMoney'][$i];
+            // $total_score->save();
+
+            $total_score = TotalScore::updateOrCreate(
+                ['game_player_id' => $game_player[$i]->id],
+                [
+                    'score' => $data['score'][$i],
+                    'score_money' => $data['scoreMoney'][$i],
+                    'chip_number' => $data['chipNumber'][$i],
+                    'chip_money' => $data['chipMoney'][$i]
+                ]
+            );
 
             foreach ($data['rows'] as $key => $value) {
                 # code...

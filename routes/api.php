@@ -30,3 +30,9 @@ Route::get('hello', function(){
 Route::apiResource('player', PlayerController::class);
 Route::apiResource('game', GameController::class);
 Route::apiResource('score', ScoreController::class);
+
+Route::post('/player/check', [PlayerController::class, 'update']);
+
+Route::post('/game/score', [GameController::class, 'game_score_update']);
+
+Route::post('/game/chip', [GameController::class, 'game_chip_update']);
