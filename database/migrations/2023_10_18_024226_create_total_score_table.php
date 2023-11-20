@@ -16,10 +16,10 @@ class CreateTotalScoreTable extends Migration
         Schema::create('total_score', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->bigInteger('score');
-            $table->bigInteger('score_money');
-            $table->bigInteger('chip_number');
-            $table->bigInteger('chip_money');
+            $table->string('score');
+            $table->string('score_money');
+            $table->string('chip_number');
+            $table->string('chip_money');
             $table->foreignId('game_player_id')->constrained('game_player')->onDelete('cascade');
         });
     }

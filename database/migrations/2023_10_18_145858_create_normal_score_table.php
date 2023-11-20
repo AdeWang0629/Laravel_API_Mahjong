@@ -16,7 +16,7 @@ class CreateNormalScoreTable extends Migration
         Schema::create('normal_score', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->bigInteger('score');
+            $table->string('score');
             $table->foreignId('game_player_id')->constrained('game_player')->onDelete('cascade');
         });
     }

@@ -55,16 +55,20 @@ class ScoreController extends Controller
                 ]
             );
 
+            $delete_normal_score = NormalScore::where('game_player_id', $game_player[$i]->id)->delete();
             foreach ($data['rows'] as $key => $value) {
                 # code...
                 if (isset($value[$i])) {
-                    // $normal_score = new NormalScore();
-                    // $normal_score->game_player_id = $game_player[$i]->id;
-                    // $normal_score->score = $value[$i];
-                    // $normal_score->save();
-                    $normal_score = NormalScore::where('game_player_id', $game_player[$i]->id)
-                        ->where('score', $value[$i])
-                        ->firstOrNew(['game_player_id' => $game_player[$i]->id, 'score' => $value[$i]]);
+                    $normal_score = new NormalScore();
+                    $normal_score->game_player_id = $game_player[$i]->id;
+                    $normal_score->score = $value[$i];
+                    $normal_score->save();
+                    // $normal_score = NormalScore::where('game_player_id', $game_player[$i]->id)
+                    //     ->where('score', $value[$i])
+                    //     ->firstOrNew(['game_player_id' => $game_player[$i]->id, 'score' => $value[$i]]);
+                    // $normal_score = NormalScore::updateOrCreate(
+                    //     ['game_player_id' => $game_player[$i]->id, 'score' => $value[$i]]
+                    // );
                     $normal_score->save();
                 }
             }
