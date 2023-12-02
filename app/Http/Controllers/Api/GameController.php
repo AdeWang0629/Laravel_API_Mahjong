@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Player;
 use App\Models\Game;
+use App\Models\GamePlayer;
 
 class GameController extends Controller
 {
@@ -69,7 +70,25 @@ class GameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->body;
+
+        $playerData = $data['playerlist'];
+
+        $gameData = [
+            'score' => $data['score'] / 10,
+            'chip' => $data['chip'],
+            'event_date' => $data['event_date'],
+        ];
+        $game = Game::find($id);
+        $game->update($gameData);
+        
+        $game_player = GamePlayer::where('game_id', $id)->get();
+
+        foreach ($playerData as $key => $player) {
+            $game_player[$key]->player_id = $player['id'];
+            $game_player[$key]->save();
+        }
+
     }
 
     /**
