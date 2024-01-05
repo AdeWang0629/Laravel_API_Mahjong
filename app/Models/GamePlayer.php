@@ -20,4 +20,12 @@ class GamePlayer extends Model
     public function normal_scores(){
         return $this->hasMany(NormalScore::class);
     }
+
+    public function players(){
+        return $this->belongsTo(Player::class, 'player_id');
+    }
+
+    public function games(){
+        return $this->belongsTo(Game::class, 'game_id');
+    }
 }

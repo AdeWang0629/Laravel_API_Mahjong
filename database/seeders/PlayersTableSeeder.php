@@ -15,10 +15,14 @@ class PlayersTableSeeder extends Seeder
     public function run()
     {
         DB::table('players')->insert([
-            [ 'name' => '佐藤'],//sato
-            [ 'name' => '鈴木'],//Suzuki
-            [ 'name' => '田中'],//Tanaka
-            [ 'name' => '中村']//Nakamura
+            // [ 'name' => '佐藤'],//sato
+            // [ 'name' => '鈴木'],//Suzuki
+            // [ 'name' => '田中'],//Tanaka
+            // [ 'name' => '中村']//Nakamura
+            [ 'name' => 'aa'],//sato
+            [ 'name' => 'bb'],//Suzuki
+            [ 'name' => 'cc'],//Tanaka
+            [ 'name' => 'dd']//Nakamura
         ]);
     }
 }

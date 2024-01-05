@@ -14,4 +14,8 @@ class Player extends Model
     public function games(){
         return $this->belongsToMany(Game::class, 'game_player');
     }
+
+    public function game_players(){
+        return $this->hasOne(GamePlayer::class, 'player_id');
+    }
 }

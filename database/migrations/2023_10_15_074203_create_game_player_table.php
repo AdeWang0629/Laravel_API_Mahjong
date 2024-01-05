@@ -16,8 +16,8 @@ class CreateGamePlayerTable extends Migration
         Schema::create('game_player', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->bigInteger('player_id');
-            $table->bigInteger('game_id');
+            $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
+            $table->foreignId('player_id')->constrained('players')->onDelete('cascade');
         });
     }
 

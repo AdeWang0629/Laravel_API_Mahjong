@@ -32,6 +32,8 @@ Route::apiResource('game', GameController::class);
 Route::apiResource('score', ScoreController::class);
 
 Route::post('/player/check', [PlayerController::class, 'update']);
+Route::post('/player/get-player-class', [PlayerController::class, 'getPlayerClass']);
+Route::post('/player/get-player-member', [PlayerController::class, 'getPlayerMember']);
 
 Route::post('/game/score', [GameController::class, 'game_score_update']);
 
