@@ -35,7 +35,7 @@ class ScoreController extends Controller
         \Log::info($data);
         $game_player = GamePlayer::where('game_id', $data['game_id'])->get();
      
-        // if (count($data['chipNumber']) == count($game_player) && count($data['chipMoney']) == count($game_player)) {
+        if (count($data['chipNumber']) == count($game_player) && count($data['chipMoney']) == count($game_player)) {
             for ($i=0; $i < count($game_player); $i++) { 
                 # code...
                 $total_score = TotalScore::updateOrCreate(
@@ -70,10 +70,10 @@ class ScoreController extends Controller
             $game->status = true;
             $game->save();
     
-        //     return response()->json('success');
-        // }else{
-        //     return response()->json(["error" => "Invalid data"]);
-        // }
+            return response()->json('success');
+        }else{
+            return response()->json(["error" => "Invalid data"]);
+        }
 
     }
 
