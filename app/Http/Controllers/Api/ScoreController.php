@@ -8,6 +8,7 @@ use App\Models\GamePlayer;
 use App\Models\TotalScore;
 use App\Models\Game;
 use App\Models\NormalScore;
+use Illuminate\Support\Facades\DB;
 
 class ScoreController extends Controller
 {
@@ -35,45 +36,49 @@ class ScoreController extends Controller
         \Log::info($data);
         $game_player = GamePlayer::where('game_id', $data['game_id'])->get();
      
-        if (count($data['chipNumber']) == count($game_player) && count($data['chipMoney']) == count($game_player)) {
-            for ($i=0; $i < count($game_player); $i++) { 
-                # code...
-                $total_score = TotalScore::updateOrCreate(
-                    ['game_player_id' => $game_player[$i]->id],
-                    [
-                        'score' => $data['score'][$i],
-                        'score_money' => $data['scoreMoney'][$i],
-                        'chip_number' => $data['chipNumber'][$i],
-                        'chip_money' => $data['chipMoney'][$i]
-                    ]
-                );
-    
+        for ($i=0; $i < count($game_player); $i++) { 
+            # code...
+            $total_score = TotalScore::updateOrCreate(
+                ['game_player_id' => $game_player[$i]->id],
+                [
+                    'score' => $data['score'][$i],
+                    'score_money' => $data['scoreMoney'][$i],
+                    'chip_number' => count($data['chipNumber']) > $i ? ($data['chipNumber'][$i] == NULL ? '' : $data['chipNumber'][$i]) : '',
+                    'chip_money' => count($data['chipMoney']) > $i ? $data['chipMoney'][$i] : '0',
+                ]
+            );
+
+            try {
+                DB::beginTransaction();
+            
                 $delete_normal_score = NormalScore::where('game_player_id', $game_player[$i]->id)->delete();
-    
+            
                 foreach ($data['rows'] as $key => $value) {
-                    # code...
                     if (isset($value[$i]) && $value[$i] !== null) {
                         $normal_score = new NormalScore();
                         $normal_score->game_player_id = $game_player[$i]->id;
                         $normal_score->score = $value[$i];
                         $normal_score->save();
-                    }else{
+                    } else {
                         $normal_score = new NormalScore();
                         $normal_score->game_player_id = $game_player[$i]->id;
                         $normal_score->score = '';
                         $normal_score->save();
                     }
                 }
+            
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                // Handle the exception or log the error
             }
-    
-            $game = Game::find($data['game_id']);
-            $game->status = true;
-            $game->save();
-    
-            return response()->json('success');
-        }else{
-            return response()->json(["error" => "Invalid data"]);
         }
+
+        $game = Game::find($data['game_id']);
+        $game->status = true;
+        $game->save();
+
+        return response()->json('success');
 
     }
 
