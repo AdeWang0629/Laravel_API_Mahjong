@@ -14,7 +14,7 @@ class GamePlayer extends Model
     protected $fillable = [ 'game_id', 'player_id', 'id' ];
 
     public function total_scores(){
-        return $this->hasOne(TotalScore::class);
+        return $this->hasOne(TotalScore::class, 'game_player_id');
     }
 
     public function normal_scores(){

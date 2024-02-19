@@ -205,8 +205,8 @@ class PlayerController extends Controller
 
         if (count($game_player_data)) {
             foreach ($game_player_data as $key => $value) {
-                $total_score_data = TotalScore::where('game_player_id', $value['id'])->first();
-                $date = $total_score_data['updated_at'];
+                $total_score_data = TotalScore::where('game_player_id', $value['id'])->with('game_players.games')->first();
+                $date = $total_score_data['game_players']['games']['event_date'];
                 $convertDate = Carbon::parse($date)->format('Y-m');
                 $convertData = [
                     'date' => $convertDate,
@@ -232,8 +232,6 @@ class PlayerController extends Controller
                 array_push($grade_data_player, $dateItem);
                 $grade_data_player_sum += $scores;
             }
-            \Log::info($grade_data_player);
-            \Log::info($grade_data_player_sum);
             return response()->json(['dataState' => 1, 'grade_data_player' => $grade_data_player, 'grade_data_player_sum' => $grade_data_player_sum], 200);
         }else{
             return response()->json(['dataState' => 0], 200);
